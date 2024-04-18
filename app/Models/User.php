@@ -11,6 +11,8 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Database\Eloquent\softDeletes;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -19,12 +21,21 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use softDeletes;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'email_verified_at',
+    ];
+
     protected $fillable = [
         'name', 'email', 'password',
     ];
@@ -58,4 +69,18 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function detail_user(){
+        return $table->hasOne('App\Models\DetailUser', 'user_id');
+    }
+
+    public function service(){
+        return $table->hasMany('App\Models\Service', 'user_id');
+    }
+    public function order_buyer(){
+        return $table->hasMany('App\Models\Order', 'buyer_id');
+    }
+    public function order_freelance(){
+        return $table->hasMany('App\Models\Order', 'freelance_id');
+    }
 }
