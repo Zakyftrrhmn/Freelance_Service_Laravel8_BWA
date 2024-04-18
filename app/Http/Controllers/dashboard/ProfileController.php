@@ -82,4 +82,10 @@ class ProfileController extends Controller
     {
         //
     }
+
+    // custom
+
+    public function delete(){
+        
+    }
 }
