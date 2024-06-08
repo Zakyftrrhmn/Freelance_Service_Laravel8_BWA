@@ -33,15 +33,15 @@ class Order extends Model
     ];
 
     public function service(){
-        return $table->belongsTo('App\Models\Service','service_id','id');
+        return $this->belongsTo('App\Models\Service','service_id','id');
     }
     public function user_buyer(){
-        return $table->belongsTo('App\Models\User', 'buyer_id', 'id');
+        return $this->belongsTo('App\Models\User', 'buyer_id', 'id');
     }
     public function user_freelance(){
-        return $table->belongsTo('App\Models\User', 'freelance_id', 'id');
+        return $this->belongsTo('App\Models\User', 'freelance_id', 'id');
     }
     public function order_status(){
-        return $table->belongsTo('App\Models\User', 'order_status_id', 'id');
+        return $this->belongsTo('App\Models\User', 'order_status_id', 'id');
     }
 }

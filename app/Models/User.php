@@ -71,16 +71,16 @@ class User extends Authenticatable
     ];
 
     public function detail_user(){
-        return $table->hasOne('App\Models\DetailUser', 'user_id');
+        return $this->hasOne('App\Models\DetailUser', 'user_id');
     }
 
     public function service(){
-        return $table->hasMany('App\Models\Service', 'user_id');
+        return $this->hasMany('App\Models\Service', 'user_id');
     }
     public function order_buyer(){
-        return $table->hasMany('App\Models\Order', 'buyer_id');
+        return $this->hasMany('App\Models\Order', 'buyer_id');
     }
     public function order_freelance(){
-        return $table->hasMany('App\Models\Order', 'freelance_id');
+        return $this->hasMany('App\Models\Order', 'freelance_id');
     }
 }

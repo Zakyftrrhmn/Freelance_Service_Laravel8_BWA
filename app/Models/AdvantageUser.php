@@ -27,6 +27,6 @@ class AdvantageUser extends Model
         'deleted_at',
     ];
     public function service(){
-        return $table->belongsTo('App\Models\Service','service_id','id');
+        return $this->belongsTo('App\Models\Service','service_id','id');
     }
 }

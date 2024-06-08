@@ -31,10 +31,10 @@ class DetailUser extends Model
     ];
 
     public function user(){
-        return $table->belongsTo('App\Models\User', 'user_id', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     public function experience_user(){
-        return $table->hasMany('App\Models\ExperienceUser','detail_user_id');
+        return $this->hasMany('App\Models\ExperienceUser','detail_user_id');
     }
 }
