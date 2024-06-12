@@ -68,7 +68,7 @@ class RequestController extends Controller
     {
         $order = Order::where('id', $id)->first();
 
-        return view('pages.dashboard.request.detail', compact(order));
+        return view('pages.dashboard.request.detail', compact('order'));
     }
 
     /**
@@ -108,13 +108,18 @@ class RequestController extends Controller
     // custom
 
     public function approve($id){
-        $order = Order::where()->first();
+        $order = Order::first();
 
-        $order = Order::find($order['id']);
-        $order->order_status_id = 1;
-        $order->save();
-
-        toast()->success('Approve has been Success');
+        if ($order) {
+            $order->order_status_id = 1;
+            $order->save();
+            
+            toast()->success('Approve has been Success');
+        } else {
+            toast()->error('No order found');
+        }
+        
         return redirect()->route('member.request.index');
+        
     }
 }

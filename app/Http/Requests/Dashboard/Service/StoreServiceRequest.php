@@ -36,7 +36,7 @@ class StoreServiceRequest extends FormRequest
             'delivery_time' => [
                 'required','integer','max:100',
             ],
-            'revision_time' => [
+            'revision_limit' => [
                 'required','integer','max:100',
             ],
             'price' => [

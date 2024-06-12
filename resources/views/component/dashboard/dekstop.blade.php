@@ -8,13 +8,24 @@
 
         <div class="flex items-center pt-8 pl-5 space-x-2 border-t border-gray-100">
             <!--Author's profile photo-->
-            <img class="object-cover object-center mr-1 rounded-full w-14 h-14"
-                src="{{url('https://randomuser.me/api/portraits/men/1.jpg')}}" alt="random user" />
+
+            @if (auth()->user()->detail_user()->first()->photo != null)
+
+            <img class="inline ml-3 h-12 w-12 rounded-full" src="{{url(Storage::url(auth()->user()->detail_user()->first()->photo))}}" alt="" loading="lazy" />
+
+            @else
+
+            <svg class="inline w-12 h-12 mr-3 rounded-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            
+            @endif
+            
             <div>
                 <!--Author name-->
-                <p class="font-semibold text-gray-900 text-md">{{ Auth::user()->name }}</p>
+                <p class="font-semibold text-gray-900 text-md">{{ Auth::user()->name ?? '' }}</p>
                 <p class="text-sm font-light text-serv-text">
-                    Website Developer
+                    {{ auth()->user()->detail_user()->first()->role ?? ''}}
                 </p>
             </div>
         </div>
@@ -67,7 +78,9 @@
                         <rect x="14" y="14" width="7" height="7" rx="2" fill="#082431" />
                     </svg> -->
                     <span class="ml-4">My Services</span>
-                    <span class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">2</span>
+                    <span class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">
+                        {{auth()->user()->service()->count()}}
+                    </span>
 
                 </a>
             </li>
@@ -97,7 +110,9 @@
                         <rect x="17" y="11" width="2" height="10" rx="1" transform="rotate(90 17 11)" fill="white" />
                     </svg> -->
                     <span class="ml-4">My Request</span>
-                    <span class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">3</span>
+                    <span class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">
+                        {{auth()->user()->order_buyer()->count()}}
+                    </span>
 
                 </a>
             </li>
@@ -126,7 +141,9 @@
                         <line x1="7.75" y1="15.25" x2="16.25" y2="15.25" stroke="white" stroke-width="1.5" stroke-linecap="round" />
                     </svg> -->
                     <span class="ml-4">My Orders</span>
-                    <span class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">10</span>
+                    <span class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">
+                        {{auth()->user()->order_freelance()->count()}}
+                    </span>
 
                 </a>
             </li>

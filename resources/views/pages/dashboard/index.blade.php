@@ -17,9 +17,18 @@
 
                 <div class="col-span-4 text-right">
                     <div @click.away="open = false" class="relative z-10 hidden mt-5 lg:block" x-data="{ open: false }">
+                        
                         <button class="flex flex-row items-center w-full px-4 py-2 mt-2 text-left bg-white rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4">
-                        <img class="inline w-12 h-12 mr-3 rounded-full" src="{{url('https://randomuser.me/api/portraits/men/1.jpg')}}" alt="">
+                        
+                        @if (auth()->user()->detail_user()->first()->photo != NULL)
+                            <img src="{{url(Storage::url(auth()->user()->detail_user()->first()->photo)) }}" alt="photo-profile" class="inline w-12 h-12 mr-3 rounded-full"/>
+                        @else
+                        <svg class="inline w-12 h-12 mr-3 rounded-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        @endif
                             Halo, {{Auth::user()->name}}
+
                         </button>
                     </div>
                 </div>
@@ -33,9 +42,9 @@
                         <div class="flex flex-col justify-center px-4 py-4 mb-4 bg-white rounded-xl">
                             <div>
                                 <div>
-                                    <img src="{{asset('/assets/images/services-progress-icon.svg')}}" alt="" class="w-8 h-8">
+                                    <img src="{{ asset('/assets/images/services-progress-icon.svg ')}}" alt="" class="w-8 h-8">
                                 </div>
-                                <p class="mt-2 text-2xl font-semibold text-left text-gray-800">3</p>
+                                <p class="mt-2 text-2xl font-semibold text-left text-gray-800">{{ $progress ?? ''}}</p>
                                 <p class="text-sm text-left text-gray-500">
                                     Services <br class="hidden lg:block">
                                     On Progress
@@ -47,7 +56,7 @@
                                 <div>
                                     <img src="{{asset('/assets/images/services-completed-icon.svg')}}" alt="" class="w-8 h-8">
                                 </div>
-                                <p class="mt-2 text-2xl font-semibold text-left text-gray-800">144</p>
+                                <p class="mt-2 text-2xl font-semibold text-left text-gray-800">{{ $completed ?? ''}}</p>
                                 <p class="text-sm text-left text-gray-500">
                                     Services <br class="hidden lg:block">
                                     Completed
@@ -59,7 +68,7 @@
                                 <div>
                                     <img src="{{asset('/assets/images/new-freelancer-icon.svg')}}" alt="" class="w-8 h-8">
                                 </div>
-                                <p class="mt-2 text-2xl font-semibold text-left text-gray-800">3</p>
+                                <p class="mt-2 text-2xl font-semibold text-left text-gray-800">{{ $freelancer ?? ''}}</p>
                                 <p class="text-sm text-left text-gray-500">
                                     New Freelancer <br class="hidden lg:block">
                                     Work for You
@@ -73,143 +82,115 @@
                                 Latest Orders
                             </h2>
                             <p class="text-sm text-gray-400">
-                                3 Total Orders On Progress
+                                {{ $progress ?? ''}} Total Orders On Progress
                             </p>
                         </div>
-                        <table class="w-full mt-4" aria-label="Table">
-                            <thead>
-                                <tr class="text-sm font-normal text-left text-gray-900 border-b border-b-gray-600">
-                                    <th class="py-4" scope="">Name</th>
-                                    <th class="py-4" scope="">Services Name</th>
-                                    <th class="py-4" scope="">Deadline</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white">
-                                <tr class="text-gray-700">
-                                    <td class="w-1/3 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded-full" src="{{url('https://randomuser.me/api/portraits/men/2.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-black">Siri Leaf</p>
-                                                <p class="text-sm text-yellow-400">On Progress</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="w-2/4 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded" src="{{url('https://randomuser.me/api/portraits/men/3.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-black">
-                                                    Design WordPress E-Commerce Modules
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-5 text-xs text-red-500">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline mb-1">
-                                            <path d="M7.0002 12.8332C10.2219 12.8332 12.8335 10.2215 12.8335 6.99984C12.8335 3.77818 10.2219 1.1665 7.0002 1.1665C3.77854 1.1665 1.16687 3.77818 1.16687 6.99984C1.16687 10.2215 3.77854 12.8332 7.0002 12.8332Z" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M7 3.5V7L9.33333 8.16667" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
 
-                                        1 May 2021
-                                    </td>
-                                </tr>
-                                <tr class="text-gray-700">
-                                    <td class="w-1/3 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded-full" src="{{url('https://randomuser.me/api/portraits/men/4.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-black">Miles John</p>
-                                                <p class="text-sm text-yellow-400">On Progress</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="w-2/4 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded" src="{{url('https://randomuser.me/api/portraits/men/5.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-black">
-                                                    Fix Any Issue on Your WordPress Website
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-5 text-xs text-red-500">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline mb-1">
-                                            <path d="M7.0002 12.8332C10.2219 12.8332 12.8335 10.2215 12.8335 6.99984C12.8335 3.77818 10.2219 1.1665 7.0002 1.1665C3.77854 1.1665 1.16687 3.77818 1.16687 6.99984C1.16687 10.2215 3.77854 12.8332 7.0002 12.8332Z" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M7 3.5V7L9.33333 8.16667" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
+                      <table class="w-full mt-4" aria-label="Table">
+                        <thead>
+                            <tr class="text-sm font-normal text-left text-gray-900 border-b border-b-gray-600">
+                                <th class="py-4" scope="">Name</th>
+                                <th class="py-4" scope="">Services Name</th>
+                                <th class="py-4" scope="">Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
 
-                                        1 May 2021
-                                    </td>
-                                </tr>
-                                <tr class="text-gray-700">
-                                    <td class="w-1/3 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded-full" src="{{url('https://randomuser.me/api/portraits/men/6.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-black">Alexa Sara</p>
-                                                <p class="text-sm text-yellow-400">On Progress</p>
-                                            </div>
+                            @forelse ($orders as $order)
+                            <tr class="text-gray-700">
+                                
+                                <td class="w-1/3 px-1 py-5">
+                                    <div class="flex items-center text-sm">
+                                        <div class="relative w-10 h-10 mr-3 rounded-full md:block">
+                                            @if (auth()->user()->detail_user()->first()->photo != NULL)
+                                                <img src="{{ url(Storage::url(auth()->user()->detail_user()->first()->photo)) }}" alt="photo-profile" class="object-cover inline w-12 h-12 mr-3 rounded-full"/>
+                                            @else
+                                                <svg class="w-full h-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                </svg>
+                                            @endif
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                         </div>
-                                    </td>
-                                    <td class="w-2/4 px-1 py-5">
-                                        <div class="flex items-center text-sm">
-                                            <div class="relative w-10 h-10 mr-3 rounded-full md:block">
-                                                <img class="object-cover w-full h-full rounded" src="{{url('https://randomuser.me/api/portraits/men/7.jpg')}}" alt="" loading="lazy" />
-                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-black">
-                                                    Design WordPress E-Commerce Modules
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-1 py-5 text-xs text-red-500">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline mb-1">
-                                            <path d="M7.0002 12.8332C10.2219 12.8332 12.8335 10.2215 12.8335 6.99984C12.8335 3.77818 10.2219 1.1665 7.0002 1.1665C3.77854 1.1665 1.16687 3.77818 1.16687 6.99984C1.16687 10.2215 3.77854 12.8332 7.0002 12.8332Z" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M7 3.5V7L9.33333 8.16667" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
 
-                                        1 May 2021
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        <div>
+                                            <p class="font-medium text-black">{{ $order->user_buyer->name ?? '' }}</p>
+
+                                            @if ($order->order_status_id == '1')
+                                                <p class="text-sm text-green-500"> {{ $order->order_status->name ?? '' }} </p>
+                                            @elseif($order->order_status_id == '2')
+                                                <p class="text-sm text-yellow-500"> {{ $order->order_status->name ?? '' }} </p>
+                                            @elseif($order->order_status_id == '3')
+                                                <p class="text-sm text-red-500"> {{ $order->order_status->name ?? '' }} </p>
+                                            @else
+                                                <p class="text-sm text-black-500"> {{ $order->order_status->name ?? '' }} </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="w-2/4 px-1 py-5">
+                                    <div class="flex items-center text-sm">
+                                        <div class="relative w-10 h-10 mr-3 rounded-full md:block">
+
+                                            @if (isset($order->service->thumbnail_service[0]->thumbnail) != null)
+                                                <img class="object-cover w-full h-full rounded" src="{{url(Storage::url($order->service->thumbnail_service[0]->thumbnail))}}" alt="thumbnail" loading="lazy" />
+                                            @else
+                                            <svg class="object-cover w-full h-full rounded text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999A4.002 4.002 0 0112 5a4.002 4.002 0 014-4 4.002 4.002 0 014 4 4.002 4.002 0 01-3.998 3.999z" /> 
+                                            </svg>
+                                            
+                                            @endif
+
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                        </div>
+                                        <div>
+                                            {{-- <a href="/dashboard/services/details.php" class="font-medium text-black">
+                                                Design WordPress <br>E-Commerce Modules
+                                            </a>  --}}
+                                            <a href="{{'#'}}" class="font-medium text-black">
+                                                {{ $order->service->title ?? '' }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="px-1 py-5 text-xs text-red-500">
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="inline mb-1">
+                                        <path d="M7.0002 12.8332C10.2219 12.8332 12.8335 10.2215 12.8335 6.99984C12.8335 3.77818 10.2219 1.1665 7.0002 1.1665C3.77854 1.1665 1.16687 3.77818 1.16687 6.99984C1.16687 10.2215 3.77854 12.8332 7.0002 12.8332Z" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M7 3.5V7L9.33333 8.16667" stroke="#F26E6E" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+
+                                    1 May 2021
+                                </td>
+                                
+
+                                <!-- Add columns for Services Name and Deadline -->
+                            </tr>
+                            @empty
+                                <!-- Add any content to display when there are no orders -->
+                            @endforelse
+                        </tbody>
+                    </table>
+
+
                     </div>
                 </main>
                 <aside class="p-4 lg:col-span-5 md:col-span-12 md:pt-0">
                     <div class="relative w-full h-56 m-auto text-white transition-transform transform bg-red-100 rounded-xl">
 
-                        <img class="relative object-cover w-full h-full rounded-xl" src="{{asset('/assets/images/card-background.png')}}" alt="">
+                        <img class="relative object-cover w-full h-full rounded-xl" src="{{ asset('/assets/images/card-background.png') }}" alt="">
 
                         <div class="absolute w-full px-8 top-8">
                             <div class="flex justify-between">
                                 <div class="">
-                                    <p class="font-light">
+                                    <p class="font-light"> 
                                         Your Balance
                                         </h1>
                                     <p class="font-medium tracking-widest">
                                         Rp 21.000.000
                                     </p>
                                 </div>
-                                <img class="w-16 h-12" src="{{asset('/assets/images/visa-icon.svg"')}} alt="" />
+                                <img class="w-16 h-12" src="{{asset('/assets/images/visa-icon.svg')}} " alt="" />
                             </div>
                             <div class="pt-6">
                                 <p class="font-medium tracking-more-wider">

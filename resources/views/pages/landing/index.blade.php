@@ -66,7 +66,14 @@
                     </div>
                     <div class="flex overflow-x-scroll pb-10 hide-scroll-bar dragscroll -mx-3">
                         <div class="flex flex-nowrap">
-                            @include('component.landing.service')
+                            
+                            @forelse ($services as $item)
+
+                             @include('component.landing.service')
+
+                            @empty
+                                
+                            @endforelse
                         </div>
 
                     </div>

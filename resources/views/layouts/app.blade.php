@@ -29,7 +29,7 @@
                 <div class="flex flex-col flex-1 w-full">
                     @include('component.dashboard.header')
 
-                     {{-- @include('sweetalert::alert') --}}
+                     @include('sweetalert::alert')
 
                     @yield('content')
                 </div>

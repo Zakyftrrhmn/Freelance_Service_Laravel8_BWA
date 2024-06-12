@@ -4,7 +4,7 @@ namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 
-use App\Http\Request\Dashboard\MyOrder\UpdateMyOrderRequest;
+use App\Http\Requests\Dashboard\MyOrder\UpdateMyOrderRequest;
 
 use Illuminate\Support\Facades\Storage;
 

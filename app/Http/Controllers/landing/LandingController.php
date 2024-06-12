@@ -113,32 +113,36 @@ class LandingController extends Controller
     }
 
     public function booking($id){
-        $servie = Service::where('id', $id)->first();
+        $service = Service::where('id', $id)->first();
         $user_buyer = Auth::user()->id;
-
+    
         if ($service->user_id == $user_buyer) {
-            toast()->warning('Sorry, Member Cannot Book their own Service');
+            toast()->warning('Sorry, Members cannot book their own service');
             return back();
         }
-
-        $order =new Order;
+    
+        $order = new Order;
         $order->buyer_id = $user_buyer;
         $order->freelance_id = $service->user->id;
         $order->service_id = $service->id;
-        $order->file = NULL;
-        $order->note = NULL;
-        $order->expired = Date('Y-m-d', strtotime('+3 days'));
+        $order->file = null;
+        $order->note = null;
+        $order->expired = now()->addDays(3); // Use Carbon's now() method to get current date/time and addDays() to add days
         $order->order_status_id = 4;
         $order->save();
-
-        $order_detail = Order::where('id', $order->id)->first();
-
-        return redirect('detail.booking.landing', $order->id);
+    
+        // Flash the order ID to the session for the next request
+        session()->flash('order_id', $order->id);
+    
+        // Redirect to the route with the order ID as a parameter
+        return redirect()->route('detail.booking.landing', ['id' => $order->id]);
     }
-
+    
     public function detail_booking($id){
-        $order = Order::where('id', $id)->first();
-
+        // Retrieve the order using the provided ID
+        $order = Order::findOrFail($id);
+    
         return view('pages.landing.booking', compact('order'));
     }
+    
 }
